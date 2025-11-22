@@ -55,16 +55,21 @@ jobs:
         ARCHIVE_NAME=gowsoos-linux-${{ matrix.goarch }}.tar.gz
         tar -czf $ARCHIVE_NAME $BINARY_NAME
 
-        # Create checksum
+        # Create checksum for archive
         sha256sum $ARCHIVE_NAME > $ARCHIVE_NAME.sha256
+
+        # Create checksum for binary
+        sha256sum $BINARY_NAME > $BINARY_NAME.sha256
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v5
       with:
         name: gowsoos-linux-${{ matrix.goarch }}
         path: |
+          gowsoos-linux-${{ matrix.goarch }}
           gowsoos-linux-${{ matrix.goarch }}.tar.gz
           gowsoos-linux-${{ matrix.goarch }}.tar.gz.sha256
+          gowsoos-linux-${{ matrix.goarch }}.sha256
         retention-days: 30
 
   release:
@@ -86,6 +91,7 @@ jobs:
         mkdir -p release-assets
         find artifacts -name "*.tar.gz" -exec cp {} release-assets/ \;
         find artifacts -name "*.sha256" -exec cp {} release-assets/ \;
+        find artifacts -type f -executable -exec cp {} release-assets/ \;
         ls -la release-assets/
 
     - name: Create Release
@@ -94,6 +100,7 @@ jobs:
         files: |
           release-assets/*.tar.gz
           release-assets/*.sha256
+          release-assets/gowsoos-*
         draft: false
         prerelease: false
         generate_release_notes: true
