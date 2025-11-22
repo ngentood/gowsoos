@@ -1,0 +1,33 @@
+# gowsoos Configuration File
+# This file contains the default configuration for gowsoos
+# Default location: /etc/gowsoos/config.yaml
+
+# Server configuration
+address: ":2086"                    # HTTP server listening address
+dst_address: "127.0.0.1:22"        # SSH server destination address
+
+# TLS configuration
+tls_enabled: false                  # Enable TLS mode
+tls_address: ":443"                 # TLS server listening address
+tls_private_key: "/etc/gowsoos/tls/private.pem"  # Path to TLS private key
+tls_public_key: "/etc/gowsoos/tls/public.key"    # Path to TLS public key
+tls_mode: "handshake"               # TLS mode: "handshake" or "stunnel"
+
+# Handshake configuration
+custom_handshake: ""                # Custom HTTP response code (e.g., "101 Switching Protocols")
+
+# Logging configuration
+log_level: "info"                   # Log level: debug, info, warn, error
+
+# Metrics configuration
+metrics_enabled: false              # Enable Prometheus metrics
+metrics_port: ":9090"               # Metrics server port
+
+# Security settings
+max_connections: 1000                # Maximum concurrent connections
+timeout: 30                        # Connection timeout in seconds
+buffer_size: 32768                  # Buffer size in bytes (32KB)
+
+# Performance tuning
+keep_alive: true                    # Enable TCP keep-alive
+no_delay: true                      # Disable Nagle's algorithm

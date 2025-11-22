@@ -1,0 +1,45 @@
+[Unit]
+Description=gowsoos - SSH over HTTP WebSocket Proxy
+Documentation=https://github.com/your-repo/gowsoos
+After=network.target network-online.target
+Requires=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=gowsoos
+Group=gowsoos
+ExecStart=/usr/bin/gowsoos --config /etc/gowsoos/config.yaml
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=gowsoos
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/gowsoos /var/run/gowsoos /etc/gowsoos
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RemoveIPC=true
+
+# Network settings
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Environment
+Environment=ENV=production
+
+[Install]
+WantedBy=multi-user.target
