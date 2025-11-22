@@ -89,8 +89,8 @@ jobs:
     - name: Prepare release assets
       run: |
         mkdir -p release-assets
-        # Copy binaries
-        find artifacts -type f -executable -name "gowsoos-*" -exec cp {} release-assets/ \;
+        # Copy binaries by name pattern
+        find artifacts -name "gowsoos-linux-*" -type f ! -name "*.sha256" ! -name "*.tar.gz" -exec cp {} release-assets/ \;
         # Copy archives
         find artifacts -name "*.tar.gz" -exec cp {} release-assets/ \;
         # Copy checksums
@@ -98,6 +98,8 @@ jobs:
         # List all files
         echo "Release assets:"
         ls -la release-assets/
+        echo "File details:"
+        file release-assets/* 2>/dev/null || true
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
