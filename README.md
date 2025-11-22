@@ -24,14 +24,7 @@ make build
 sudo make install
 ```
 
-### Using Installation Script (Recommended)
-```bash
-# Install from binary package
-sudo ./install.sh binary gowsoos-v1.1.0-linux-amd64.tar.gz
 
-# Install from source
-sudo ./install.sh source .
-```
 
 ### Manual Installation
 ```bash
@@ -46,10 +39,7 @@ sudo systemctl enable gowsoos
 sudo systemctl start gowsoos
 ```
 
-### Using Go
-```bash
-go install github.com/your-repo/gowsoos@latest
-```
+
 
 
 ## Systemd Service Management
@@ -276,6 +266,3 @@ sudo userdel gowsoos
 sudo systemctl daemon-reload
 ```
 
-## License
-
-[Your License Here]
