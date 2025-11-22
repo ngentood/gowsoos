@@ -43,7 +43,11 @@ jobs:
         CGO_ENABLED: 0
       run: |
         BINARY_NAME=gowsoos-linux-${{ matrix.goarch }}
-        go build -ldflags="-s -w" -o $BINARY_NAME ./cmd/main.go
+        go build -ldflags="-s -w" -o $BINARY_NAME .
+
+        # Verify it's a valid binary
+        file $BINARY_NAME
+        ls -la $BINARY_NAME
 
     - name: Create tar.gz archive
       run: |
